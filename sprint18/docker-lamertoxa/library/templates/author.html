@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for msg in messages %}
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Success!</h4>
+    <strong>{{ msg }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{% endfor %}
+
+<div class="container p-2">
+<h3>Authors:</h3>
+<p>We have {{author_list|length}} suitable author(s) in our database.</p>
+</div>
+
+<div class="container p-2">
+<div class="row" style="align-items: center;">
+<div class="col-1">
+<form method="GET">
+    <a class="btn btn-primary" href="{% url 'author_info' %}">Get all</a>
+</form>
+</div>
+<div class="col">
+
+<form method="POST">{% csrf_token %}
+<div class="container p-2">
+<div class="row">
+<div class="col-1">
+    <input class="btn btn-primary" type="submit" value="Search" />
+</div>
+<div class="col-10">
+    <input class="form-control" type="text" name="search_phrase" placeholder="Search authors...">
+</div>
+</div>
+</div>
+</form>
+    </div>
+  </div>
+    </div>
+<br>
+
+<form method="GET">
+  <table class="table">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Patronymic</th>
+    <th>Books</th>
+    <th><div class="col-2">
+<a href={% url 'author_form' %}>Add&nbsp;author</a>
+</div></th>
+  </tr>
+  {% for author in author_list %}
+  <tr>
+    <td>{{author.id}}</td>
+    <td>{{author.name}}</td>
+    <td>{{author.surname}}</td>
+    <td>{{author.patronymic}}</td>
+    <td>
+      {{author.books.all|length}}
+    </td>
+    <td>
+      <div class="container">
+      <div class="row">
+
+      <div class="col-2">
+      <form method="POST">
+      <a class="btn btn-primary btn-sm rounded-4 valign" href="{% url 'author_form' author.id %}">
+        <span class="glyphicon">&#x27F3;</span></a>
+      </form>
+      </div>
+
+      {% if not author.books.all %}
+      <div class="col-2">
+      <form method="POST">
+      <a class="btn btn-danger btn-sm rounded-4 valign" href="{% url 'author_delete_id'  author.id %} ">
+      <span class="glyphicon">&#10007;</span></a>
+      </form>
+      </div>
+      {% endif %}
+
+      </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}
+  </table>
+</form>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<h1>{{book.name}}</h1>
+
+<form method="POST">
+  <table class="table">
+  <tr>
+    <th>Parameter</th>
+    <th>Characteristic</th>
+  </tr>
+  <tr>
+    <td>Book ID</td>
+    <td>{{book.id}}</td>
+  </tr>
+  <tr>
+    <td>Book name</td>
+    {% if form  %}
+    <td>{{form.name  | as_crispy_field }}</td>
+    {% else %}
+    <td>{{book.name}}</td>
+    {% endif %}
+  </tr>
+  <tr>
+    <td>Author</td>
+    {% if form %}
+    {{ form.authors | as_crispy_field }}
+    {% else %}
+    <td>{{author}}</td>
+    {% endif %}
+  </tr>
+  <tr>
+    <td>Description</td>
+    {% if form %}
+     {{ form.description | as_crispy_field }}
+    {% else %}
+
+    <td>{{book.description}}</td>
+    {% endif %}
+  </tr>
+  <tr>
+    <td>Ammount of books</td>
+    {% if form %}
+    {{ form.count | as_crispy_field  }}
+    {% else %}
+    <td>{{book.count}}</td>
+    {% endif %}
+  </tr>
+    <tr>
+    <td>Year of Publication</td>
+    {% if form %}
+    {{ form.year_of_publication | as_crispy_field  }}
+    {% else %}
+    <td>{{book.year_of_publication}}</td>
+    {% endif %}
+  </tr>
+    <tr>
+    <td>Year of Issue</td>
+    {% if form %}
+    {{ form.date_of_issue | as_crispy_field  }}
+    {% else %}
+    <td>{{book.date_of_issue}}</td>
+    {% endif %}
+  </tr>
+  </table>
+  </form>
+
+<a class="btn btn-primary" href="{% url 'book_info'%}" > Go to all books</a></br>
+
+{% endblock %}

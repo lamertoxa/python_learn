@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container p-3">
+<p>We have {{author_list|length}} author(s) in our database.</p>
+<a class="btn btn-primary" href={% url 'author_new' %}>Add new</a>
+<a class="btn btn-primary" href={% url 'author_delete' %}>Delete by id</a>
+</div>
+
+<form method="GET">
+    <h3>Authors:</h3>
+  <table class="table">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Surname</th>
+    <th>Patronymic</th>
+    <th>Books</th>
+  </tr>
+{% for author in author_list %}
+  <tr>
+    <td>{{author.id}}</td>
+    <td>{{author.name}}</td>
+    <td>{{author.surname}}</td>
+    <td>{{author.patronymic}}</td>
+    <td>
+      {% if author.books.all %}
+      {{author.books.all|length}}
+      {% else %}
+      <form method="POST">
+      <a href="{% url 'author_delete_id' author.id %}">Delete</a>
+      </form>
+      {% endif %}
+    </td>
+  </tr>
+{% endfor %}
+  </table>
+</form>
+
+{% endblock %}

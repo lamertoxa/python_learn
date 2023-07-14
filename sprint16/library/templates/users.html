@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<p>We have {{users_list|length}} user(s) including {{librarian}} librarian(s).</p>
+
+  <form method="post">{% csrf_token %}
+  <div class="input-group mb-3">
+    <div class="col-8">
+    <input type="text" class="form-control" placeholder="Type any id" aria-label="id" name="id" aria-describedby="button-addon2">
+    </div>
+    <div class="col-4">
+    <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+  </div>
+  </form>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">id</th>
+      <th scope="col">Email</th>
+      <th scope="col">Created at</th>
+      <th scope="col">Last login</th>
+      <th scope="col">Role</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for user in users_list %}
+    <tr>
+      <td>{{ user.id }}</td>
+            <td><a  href="{% url 'user_get_one' user.id %}">{{ user.email }}</a></td>
+      <td>{{ user.created_at }}</td>
+      <td>{{ user.last_login }}</td>
+      <td>{{ user.role }}</td>
+    </tr>
+    {% endfor %}
+
+  </tbody>
+</table>
+  <a class="btn btn-primary" href="/" role="button">Back to menu</a>
+
+{% endblock %}

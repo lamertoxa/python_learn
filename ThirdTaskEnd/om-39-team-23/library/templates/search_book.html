@@ -1,0 +1,60 @@
+{% extends "home.html" %}
+{% load extra_fun %}
+{%block content%}
+
+<form method="POST" action="{% url 'book:search_book' %}" >{%csrf_token%}
+    <div class="form-group" style="padding-right:83%;">
+    <label for="exampleInputSearch">Email address</label>
+    <input name="query" type="search" class="form-control" id="exampleInputSearch" aria-describedby="Help" placeholder="Enter query">
+    <small id="Help" class="form-text text-muted">Select a filter to search for a specific key value</small>
+  </div>
+<div class="form-check" >
+  <input name="author" class="form-check-input" type="checkbox" value="author" id="flexCheckDefault">
+  <label class="form-check-label" for="flexCheckDefault">
+    by Author
+  </label>
+</div>
+<div class="form-check" >
+<input name="name" class="form-check-input" type="checkbox" value="name" id="flexCheckChecked" >
+  <label class="form-check-label" for="flexCheckChecked">
+    by Name
+  </label>
+</div>
+    <div class="form-check" >
+    <input name="descr" class="form-check-input" type="checkbox" value="descr" id="flexCheck" >
+  <label class="form-check-label" for="flexCheck">
+    by Description
+  </label>
+
+    </div>
+
+
+    <button value="Submit" type="submit" class="btn btn-dark">Search</button>
+</form>
+{% if find %}
+<table class="table table-striped table-hover" style="LINE-HEIGHT:50px">
+    <thead>
+        <tr>
+            <th scope="col">Number of Books</th>
+            <th scope="col">Name</th>
+          <th scope="col">Authors</th>
+        </tr>
+    </thead>
+  {% for row in books %}
+    <tr  >
+      <td >{{ row.id }}</td>
+      <td ><a href="{% url 'book:get_book' id=row.id %}" class="link-dark">{{ row.name }}</a></td>
+      <td >{{ row|list_authors }}</td>
+    </tr>
+  {%endfor%}
+    {% for row in authors %}
+    <tr  >
+      <td >{{ row.id }}</td>
+      <td ><a href="{% url 'book:get_book' id=row.id %}" class="link-dark">{{ row|list_books }}</a></td>
+      <td >{{ row.name }} {{ row.surname }}</td>
+    </tr>
+  {%endfor%}
+
+</table>
+{% endif %}
+{%endblock%}

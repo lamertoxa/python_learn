@@ -1,0 +1,10 @@
+[
+    {
+        "name": "Bob1",
+        "rate": 25,
+        "languages": [
+            "English",
+            "French"
+        ]
+    }
+]

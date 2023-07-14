@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not created %}
+<form method="POST">{% csrf_token %}
+    <input class="form-control" type="text" name="book id" placeholder="Book ID"></br>
+    <input class="form-control" type="number" name="days" placeholder="Days to borrow"></br>
+    <input class="btn btn-primary" type="submit" value="Create new order" />
+</form>
+
+{% else %}
+<div class="container p-3">
+<p>New order was created.</p>
+<a class="btn btn-primary" href={% url 'order_info' %}>Go to all orders</a>
+<a class="btn btn-primary" href={% url 'order_open' %}>Open new order</a>
+</div>
+
+{% endif %}
+
+{% endblock %}
+
+

@@ -1,0 +1,9 @@
+{% extends "home.html" %}
+
+  {% block content %}
+  <h1>{{ user.first_name }} {{user.middle_name}} {{user.last_name}}</h1>
+  <h5>ID:{{ user.id }}</h5>
+  <h3 >Email{{ user.email }}</h3>
+  <h3 >Last on OnLine{{ user.last_login }}</h3>
+  <h3 >{{ user.role }}</h3>
+{% endblock %}

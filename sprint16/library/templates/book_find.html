@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not find %}
+
+
+<form method="POST">{% csrf_token %}
+
+    <div class="col-4">
+        <label>Choose a search parameter:</label>
+        <select name="options" class="custom-select custom-select mb-3">
+        <option value="title">Title</option>
+        <option value="author">Author name</option>
+        <option value="description">Description</option>
+        </select>
+    </div>
+
+    <div class="col-8">
+        <label>Enter your search:</label>
+        <input class="form-control" type="text" name="search_phrase" placeholder="Your info to find..."></br>
+
+    </div>
+
+    <input class="btn btn-primary" type="submit" value="Search for my book" />
+</form>
+
+
+{% else %}
+<p>Your find was done.</p>
+<p>your options are : {{options}}</p>
+<p>We have found {{books|length}} book(s) for your search.</p>
+
+<p>Books:</p>
+<ul>
+{% for book in books %}
+<li>
+<form method="GET">
+    <a href="{% url 'book_get_one' book.id %}">{{ book.name }}</a>
+</form>
+</li>
+{% endfor %}
+</ul>
+
+<a class="btn btn-primary" href={% url 'book_info' %}>Go to all books</a>
+<a class="btn btn-primary" href={% url 'book_find' %}>Try a new find</a>
+
+{% endif %}
+
+{% endblock %}

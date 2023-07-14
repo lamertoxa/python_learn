@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not find %}
+<form method="POST">{% csrf_token %}
+    <input class="form-control" type="text" name="Order ID" placeholder="User ID"></br>
+    <input class="btn btn-primary" type="submit" value="Search for user's books" />
+</form>
+
+{% else %}
+<p>Your find was done.</p>
+<p>We have found {{books|length}} books for your search.</p>
+
+<form method="GET">
+  <h3>Books:</h3>
+  <table class="table">
+  <tr>
+    <th>Order ID</th>
+    <th>User ID</th>
+    <th>Book ID</th>
+    <th>Created at</th>
+    <th>Planned end</th>
+    <th>Order closed</th>
+  </tr>
+{% for book in books %}
+  <tr>
+    <td>{{book.id}}</td>
+    <td>{{book.user_id}}</td>
+    <td>{{book.book_id}}</td>
+    <td>{{book.created_at}}</td>
+    <td>{{book.plated_end_at}}</td>
+    {% if order.end_at %}
+    <td>{{order.end_at}}</td>
+    {% else %}
+    <td><form method="POST">
+      <a> Order is not closed </a>
+    </form></td>
+    {% endif %}
+  </tr>
+{% endfor %}
+  </table>
+</form>
+
+<a class="btn btn-primary" href="/book">Go to all books</a>
+<a class="btn btn-primary" href={% url 'book_find_id' %}>Try a new find</a>
+
+{% endif %}
+
+{% endblock %}

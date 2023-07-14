@@ -1,0 +1,36 @@
+{% extends "home.html" %}
+{% block content %}
+<form method="POST" action="{% url 'author:create' %}">
+        {% csrf_token %}
+        <p>
+            <label>Enter a name</label><br>
+            <input type="text" name="name" />
+        </p>
+        <p>
+            <label>Enter a surname</label><br>
+            <input type="text" name="surname" />
+        </p>
+        <p>
+            <label>Enter a patronymic</label><br>
+            <input type="text" name="patronymic" />
+        </p>
+        <input type="submit" value="Save" >
+    </form>
+    {% if authors.count > 0 %}
+    <h2>AUTHORS</h2>
+    <table>
+        <thead><tr><th>Id</th><th>Name</th><th>Surname</th><th>Patronymic</th></tr></thead>
+        {% for author in authors %}
+        <tr>
+            <td>{{ author.id }}</td>
+            <td>{{ author.name }}</td>
+            <td>{{ author.surname }}</td>
+            <td>{{ author.patronymic }}</td>
+
+            <td><a href="delete/{{author.id}}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for msg in messages %}
+  <div class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Success!</h4>
+    <strong>{{ msg }}</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+{% endfor %}
+
+
+<div class="container p-3">
+<h3>Orders:</h3>
+<p>We have {{order_list|length}} suitable order(s) in our database.</p>
+{% if not user.is_staff %}
+<a class="btn btn-primary" href={% url 'order_form' %}>Create new order</a>
+{% endif %}
+</div>
+
+<div class="container p-2">
+<div class="row" style="align-items: center;">
+<div class="col-1">
+<form method="GET">
+    <a class="btn btn-primary" href="{% url 'order_info' %}">Get all</a>
+</form>
+</div>
+<div class="col">
+
+<form method="POST">{% csrf_token %}
+<div class="container p-3">
+<div class="row">
+<div class="col-1">
+    <input class="btn btn-primary" type="submit" value="Search" />
+</div>
+<div class="col-10">
+    <input class="form-control" type="text" name="search_phrase" placeholder="Search orders...">
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+<br>
+
+<form method="GET">
+  <table class="table">
+  <tr>
+    <th>Order ID</th>
+    {% if user.is_staff %}
+    <th>User ID</th>
+    <th>User e-mail</th>
+    {% endif %}
+    <th>Book name</th>
+    <th>Created at</th>
+    <th>Planned end</th>
+    <th>Order closed</th>
+    {% if user.is_staff %}
+    <th><div class="col-2">
+    <a href={% url 'order_form' %}>Add&nbsp;order</a>
+    </div></th>
+    {% endif %}
+  </tr>
+{% for order in order_list %}
+  <tr>
+    <td>{{order.id}}</td>
+    {% if user.is_staff %}
+    <td>{{order.user_id}}</td>
+    <td>{{order.user.email}}</td>
+    {% endif %}
+    <td>{{order.book.name}}</td>
+    <td>{{order.created_at}}</td>
+    <td>{{order.plated_end_at}}</td>
+    {% if order.end_at %}
+    <td>{{order.end_at}}</td>
+    {% elif user.is_staff %}
+    <td><form method="POST">
+      <a href="{% url 'order_close_id' order.id %}">Close order</a>
+    </form></td>
+    {% else %}
+    <td>Order is not closed</td>
+    {% endif %}
+    {% if user.is_staff %}
+    <td>
+     <div class="col-2">
+      <form method="POST">
+      <a class="btn btn-primary btn-sm rounded-4 valign" href="{% url 'order_form' order.id %}">
+        <span class="glyphicon">&#x27F3;</span></a>
+      </form>
+      </div>
+    </td>
+    {% endif %}
+  </tr>
+{% endfor %}
+  </table>
+</form>
+
+{% endblock %}

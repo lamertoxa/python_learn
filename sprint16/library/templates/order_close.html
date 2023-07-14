@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not closed %}
+<form method="POST">{% csrf_token %}
+    <input class="form-control" type="text" name="order id" placeholder="Order ID"></br>
+    <input class="btn btn-primary" type="submit" value="Close order" />
+</form>
+
+{% else %}
+<p>Your order with ID = {{info}}.</p>
+<a class="btn btn-primary" class="btn btn-primary" href={% url 'order_info' %}>Go to all orders</a>
+<a class="btn btn-primary" class="btn btn-primary" href={% url 'order_close' %}>Close one more</a>
+
+{% endif %}
+
+{% endblock %}
+
+

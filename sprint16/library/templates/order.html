@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container p-3">
+<p>We have {{order_list|length}} order(s) in our database.</p>
+{% if not user.is_staff %}
+<a class="btn btn-primary" href={% url 'order_open' %}>Create new order</a>
+{% endif %}
+{% if user.is_staff %}
+<a class="btn btn-primary" href={% url 'order_close' %}>Close order</a>
+{% endif %}
+{% if user.is_staff %}
+<a class="btn btn-primary" href={% url 'order_find' %}>Find user's orders</a>
+{% endif %}
+</div>
+
+
+<form method="GET">
+  <h3>Orders:</h3>
+  <table class="table">
+  <tr>
+    <th>Order ID</th>
+    {% if user.is_staff %}
+    <th>User ID</th>
+    <th>User e-mail</th>
+    {% endif %}
+    <th>Book name</th>
+    <th>Created at</th>
+    <th>Planned end</th>
+    <th>Order closed</th>
+  </tr>
+{% for order in order_list %}
+  <tr>
+    <td>{{order.id}}</td>
+    {% if user.is_staff %}
+    <td>{{order.user_id}}</td>
+    <td>{{order.user.email}}</td>
+    {% endif %}
+    <td>{{order.book.name}}</td>
+    <td>{{order.created_at}}</td>
+    <td>{{order.plated_end_at}}</td>
+    {% if order.end_at %}
+    <td>{{order.end_at}}</td>
+    {% elif user.is_staff %}
+    <td><form method="POST">
+      <a href="{% url 'order_close_id' order.id %}">Close order</a>
+    </form></td>
+    {% else %}
+    <td>Order is not closed</td>
+    {% endif %}
+  </tr>
+{% endfor %}
+  </table>
+</form>
+
+{% endblock %}

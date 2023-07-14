@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{book.name}}</h1>
+
+
+  <table class="table">
+  <tr>
+    <th>Parameter</th>
+    <th>Characteristic</th>
+  </tr>
+  <tr>
+    <td>Book ID</td>
+    <td>{{book.id}}</td>
+  </tr>
+  <tr>
+    <td>Book name</td>
+    <td>{{book.name}}</td>
+  </tr>
+  <tr>
+    <td>Author</td>
+    <td>{{author}}</td>
+  </tr>
+  <tr>
+    <td>Description</td>
+    <td>{{book.description}}</td>
+  </tr>
+  <tr>
+    <td>Ammount of books</td>
+    <td>{{book.count}}</td>
+  </tr>
+  </table>
+
+<a class="btn btn-primary" href={% url 'book_get' %}>Go to all books</a></br>
+
+{% endblock %}

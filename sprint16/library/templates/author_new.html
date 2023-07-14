@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not created %}
+<form method="POST">{% csrf_token %}
+    <input class="form-control" type="text" name="new_name" placeholder="Author name"></br>
+    <input class="form-control" type="text" name="new_surname" placeholder="Author surname"></br>
+    <input class="form-control" type="text" name="new_patronymic" placeholder="Author patronymic"></br>
+    <input class="btn btn-primary" type="submit" value="Submit new author" />
+</form>
+
+{% else %}
+<p>Your author was added.</p>
+<a class="btn btn-primary" class="btn btn-primary" href={% url 'author_info' %}>Go to authors</a>
+<a class="btn btn-primary" class="btn btn-primary" href={% url 'author_new' %}>Add new</a>
+
+{% endif %}
+
+{% endblock %}
+
+

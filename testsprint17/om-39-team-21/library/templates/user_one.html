@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{user.name}}</h1>
+
+
+  <table class="table">
+  <tr>
+    <th>Parameter</th>
+    <th>Characteristic</th>
+  </tr>
+  <tr>
+    <td>User ID</td>
+    <td>{{user.id}}</td>
+  </tr>
+  <tr>
+    <td>User email</td>
+    <td>{{user.email}}</td>
+  </tr>
+  <tr>
+    <td>First name</td>
+    <td>{{user.first_name}}</td>
+  </tr>
+  <tr>
+    <td>Last name</td>
+    <td>{{user.last_name}}</td>
+  </tr>
+  <tr>
+    <td>Middle name</td>
+    <td>{{user.middle_name}}</td>
+  </tr>
+  <tr>
+    <td>Last login</td>
+    <td>{{user.last_login}}</td>
+  </tr>
+  <tr>
+    <td>Created at</td>
+    <td>{{user.created_at}}</td>
+  </tr>
+  <tr>
+    <td>Is active</td>
+    <td>{{user.is_active}}</td>
+  </tr>
+  <tr>
+    <td>Is librarian</td>
+    <td>{{user.is_staff}}</td>
+  </tr>
+
+
+  </table>
+
+<a class="btn btn-primary" href={% url 'users' %}>Go to all users</a></br>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "home.html" %}
+{% block content %}
+<table class="table table-striped table-hover" style="LINE-HEIGHT:50px">
+
+    <thead>
+        <tr>
+            <th scope="col">Number of Order</th>
+            <th scope="col">Book Name</th>
+            <th scope="col">Created at</th>
+            <th scope="col">End at</th>
+            <th scope="col">Plated end at</th>
+        </tr>
+    </thead>
+
+  {% for row in orders %}
+
+    <tr  >
+      <td >{{ row.id }}</td>
+      <td ><a href="{% url 'book:get_book' id=row.book__id %}" class="link-dark">{{ row.book__name }}</a></td>
+        <td >{{ row.created_at }}</td>
+        <td >{{ row.end_at }}</td>
+        <td >{{ row.plated_end_at }}</td>
+    </tr>
+  {%endfor%}
+</table>
+{% endblock %}

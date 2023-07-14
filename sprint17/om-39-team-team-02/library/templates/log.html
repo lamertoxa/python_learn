@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+    <form method="post" >
+      {% csrf_token %}
+
+  <div class="form-group">
+
+  {{ reg_form|crispy }}
+</div>
+
+       {% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-{{message.tags}}" role="alert">
+
+     {{ message }}
+</div>
+    {% endfor %}
+{% endif %}
+<script>
+let errorElements = document.getElementsByClassName('alert-error');
+[...errorElements].forEach(el => {el.classList.add('alert-danger')});
+</script>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-primary" href="reg_librarian/" role="button">Register as librarian</a>
+  <a class="btn btn-primary" href="reg_user/" role="button">Register as user</a>
+
+</form>
+
+{% endblock %}

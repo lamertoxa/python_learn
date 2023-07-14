@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not find %}
+<form method="POST">{% csrf_token %}
+    <input class="form-control" type="text" name="Order ID" placeholder="User ID"></br>
+    <input class="btn btn-primary" type="submit" value="Search for user's orders" />
+</form>
+
+{% else %}
+<p>Your find was done.</p>
+<p>We have found {{orders|length}} order(s) for your search.</p>
+
+<form method="GET">
+  <h3>Orders:</h3>
+  <table class="table">
+  <tr>
+    <th>Order ID</th>
+    <th>User ID</th>
+    <th>Book ID</th>
+    <th>Created at</th>
+    <th>Planned end</th>
+    <th>Order closed</th>
+  </tr>
+{% for order in orders %}
+  <tr>
+    <td>{{order.id}}</td>
+    <td>{{order.user_id}}</td>
+    <td>{{order.book_id}}</td>
+    <td>{{order.created_at}}</td>
+    <td>{{order.plated_end_at}}</td>
+      {% if order.end_at %}
+    <td>{{order.end_at}}</td>
+    {% else %}
+    <td><form method="POST">
+      <a> Order is not closed </a>
+    </form></td>
+    {% endif %}
+  </tr>
+{% endfor %}
+  </table>
+</form>
+
+<a class="btn btn-primary" href={% url 'order_info' %}>Go to all orders</a>
+<a class="btn btn-primary" href={% url 'order_find' %}>Try a new find</a>
+
+{% endif %}
+
+{% endblock %}

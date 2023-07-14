@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if not deleted %}
+<form method="POST">{% csrf_token %}
+    <input class="form-control" type="text" name="new_ID" placeholder="Author ID"></br>
+    <input class="btn btn-primary" type="submit" value="Delete author" />
+</form>
+
+{% else %}
+<p>Your author with id = {{info}}.</p>
+<a class="btn btn-primary" class="btn btn-primary"href={% url 'author_info' %}>Go to authors</a>
+<a class="btn btn-primary" class="btn btn-primary"href={% url 'author_delete' %}>Delete one more</a>
+
+{% endif %}
+
+{% endblock %}
+
+
